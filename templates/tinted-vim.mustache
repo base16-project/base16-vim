@@ -131,6 +131,34 @@ else
   let s:ctermbg = s:cterm00
 endif
 
+if !exists('g:tinted_bold')
+  let g:tinted_bold = 1
+endif
+
+if !exists('g:tinted_italic')
+  let g:tinted_italic = 1
+endif
+
+if !exists('g:tinted_strikethrough')
+  let g:tinted_strikethrough = 1
+endif
+
+if !exists('g:tinted_underline')
+  let g:tinted_underline = 1
+endif
+
+if !exists('g:tinted_undercurl')
+  let g:tinted_undercurl = g:tinted_underline
+endif
+
+let s:attrs = {
+      \ 'bold': g:tinted_bold == 1 ? 'bold' : 0,
+      \ 'italic': g:tinted_italic == 1 ? 'italic' : 0,
+      \ 'strikethrough': g:tinted_strikethrough == 1 ? 'strikethrough' : 0,
+      \ 'underline': g:tinted_underline == 1 ? 'underline' : 0,
+      \ 'undercurl': g:tinted_undercurl == 1 ? 'undercurl' : 0,
+      \}
+
 " Theme setup
 let g:colors_name = '{{ scheme-system }}-{{scheme-slug}}'
 
@@ -245,10 +273,10 @@ hi! link Substitute Search
 call <sid>hi('LineNr',        s:gui03, s:guibg, s:cterm03, s:ctermbg, '', '')
 hi! link LineNrAbove LineNr
 hi! link LineNrBelow LineNr
-call <sid>hi('CursorLineNr',   s:gui04, s:guibg, s:cterm04, s:ctermbg, 'bold', '')
+call <sid>hi('CursorLineNr',   s:gui04, s:guibg, s:cterm04, s:ctermbg, s:attrs.bold, '')
 call <sid>hi('CursorLineFold', s:gui13, s:guibg, s:cterm13, s:ctermbg, '', '')
 hi! link CursorLineSign SignColumn
-call <sid>hi('MatchParen',     s:gui06, '', s:cterm06, '',  'bold', '')
+call <sid>hi('MatchParen',     s:gui06, '', s:cterm06, '',  s:attrs.bold, '')
 call <sid>hi('ModeMsg',        s:gui05, '', s:cterm05, '', '', '')
 hi! link MsgArea None
 hi! link MsgSeparator WinSeparator
@@ -277,10 +305,10 @@ hi! link SnippetTabstop Visual
 call <sid>hi('SpecialKey',     s:gui03, '', s:cterm03, '', '', '')
 
 " Spell
-call <sid>hi('SpellBad',       '', '', s:ctermbg, s:cterm12, 'undercurl', s:gui08)
-call <sid>hi('SpellLocal',     '', '', s:ctermbg, s:cterm15, 'undercurl', s:gui15)
-call <sid>hi('SpellCap',       '', '', s:ctermbg, s:cterm16, 'undercurl', s:gui16)
-call <sid>hi('SpellRare',      '', '', s:ctermbg, s:cterm0E, 'undercurl', s:gui0E)
+call <sid>hi('SpellBad',       '', '', s:ctermbg, s:cterm12, s:attrs.undercurl, s:gui08)
+call <sid>hi('SpellLocal',     '', '', s:ctermbg, s:cterm15, s:attrs.undercurl, s:gui15)
+call <sid>hi('SpellCap',       '', '', s:ctermbg, s:cterm16, s:attrs.undercurl, s:gui16)
+call <sid>hi('SpellRare',      '', '', s:ctermbg, s:cterm0E, s:attrs.undercurl, s:gui0E)
 
 call <sid>hi('StatusLine',     s:gui04, s:gui01, s:cterm04, s:cterm01, 'none', '')
 call <sid>hi('StatusLineNC',   s:gui03, s:gui01, s:cterm03, s:cterm01, 'none', '')
@@ -306,10 +334,10 @@ hi! link WinBarNC StatusLineNC
 
 " Standard syntax
 
-call <sid>hi('Comment',        s:gui03, '', s:cterm03, '', 'italic', '')
+call <sid>hi('Comment',        s:gui03, '', s:cterm03, '', s:attrs.italic, '')
 
 call <sid>hi('Constant',       s:gui09, '', s:cterm09, '', 'none', '')
-call <sid>hi('String',         s:gui0B, '', s:cterm0B, '', 'italic', '')
+call <sid>hi('String',         s:gui0B, '', s:cterm0B, '', s:attrs.italic, '')
 call <sid>hi('Character',      s:gui0C, '', s:cterm0C, '', 'none', '')
 call <sid>hi('Number',         s:gui09, '', s:cterm09, '', 'none', '')
 call <sid>hi('Boolean',        s:gui09, '', s:cterm09, '', 'none', '')
@@ -320,7 +348,7 @@ call <sid>hi('Float',          s:gui09, '', s:cterm09, '', 'none', '')
 call <sid>hi('Identifier',     s:gui05, '', s:cterm05, '', 'none', '')
 call <sid>hi('Function',       s:gui0D, '', s:cterm0D, '', 'none', '')
 
-call <sid>hi('Statement',      s:gui0E, '', s:cterm0E, '', 'bold', '')
+call <sid>hi('Statement',      s:gui0E, '', s:cterm0E, '', s:attrs.bold, '')
 call <sid>hi('Conditional',    s:gui0E, '', s:cterm0E, '', 'none', '')
 call <sid>hi('Repeat',         s:gui0E, '', s:cterm0E, '', 'none', '')
 call <sid>hi('Label',          s:gui0E, '', s:cterm0E, '', 'none', '')
@@ -343,38 +371,38 @@ call <sid>hi('Special',        s:gui0C, '', s:cterm0C, '', 'none', '')
 call <sid>hi('SpecialChar',    s:gui0A, '', s:cterm0A, '', 'none', '')
 call <sid>hi('Tag',            s:gui09, '', s:cterm09, '', 'none', '')
 call <sid>hi('Delimiter',      s:gui05, '', s:cterm05, '', 'none', '')
-call <sid>hi('SpecialComment', s:gui0A, '', s:cterm0A, '', 'italic', '')
+call <sid>hi('SpecialComment', s:gui0A, '', s:cterm0A, '', s:attrs.italic, '')
 
 call <sid>hi('Debug',          s:gui08, '', s:cterm08, '', 'none', '')
 
-call <sid>hi('Underlined',     '', '', '', '', 'underline', '')
+call <sid>hi('Underlined',     '', '', '', '', s:attrs.underline, '')
 
 hi! link Ignore Normal
 
-call <sid>hi('Error',          s:gui08, s:guibg, s:cterm08, s:ctermbg, 'bold', '')
+call <sid>hi('Error',          s:gui08, s:guibg, s:cterm08, s:ctermbg, s:attrs.bold, '')
 
 call <sid>hi('Todo',           s:gui0C, '', s:cterm0C, '', 'none', '')
 
-call <sid>hi('Added',          s:gui14, '', s:cterm14, '', 'italic', '')
-call <sid>hi('Changed',        s:gui16, '', s:cterm16, '', 'italic', '')
-call <sid>hi('Removed',        s:gui12, '', s:cterm12, '', 'italic', '')
+call <sid>hi('Added',          s:gui14, '', s:cterm14, '', s:attrs.italic, '')
+call <sid>hi('Changed',        s:gui16, '', s:cterm16, '', s:attrs.italic, '')
+call <sid>hi('Removed',        s:gui12, '', s:cterm12, '', s:attrs.italic, '')
 
 
 " Treesitter Syntax
 
 if has('nvim-0.8.0')
   hi! link @variable Identifier
-  call <sid>hi('@variable.builtin',           s:gui05, '', s:cterm05, '', 'italic', '')
+  call <sid>hi('@variable.builtin',           s:gui05, '', s:cterm05, '', s:attrs.italic, '')
   hi! link @variable.parameter Identifier
   hi! link @variable.parameter.builtin @variable.builtin
   call <sid>hi('@variable.member',            s:gui04, '', s:cterm04, '', 'none', '')
 
   hi! link @constant Constant
-  call <sid>hi('@constant.builtin',           s:gui09, '', s:cterm09, '', 'italic', '')
+  call <sid>hi('@constant.builtin',           s:gui09, '', s:cterm09, '', s:attrs.italic, '')
   hi! link @constant.macro Constant
 
   hi! link @module Identifier
-  call <sid>hi('@module.builtin',             s:gui05, '', s:cterm05, '', 'italic', '')
+  call <sid>hi('@module.builtin',             s:gui05, '', s:cterm05, '', s:attrs.italic, '')
   hi! link @label Tag
 
   hi! link @string String
@@ -383,8 +411,8 @@ if has('nvim-0.8.0')
   hi! link @string.escape SpecialComment
   hi! link @string.special SpecialComment
   hi! link @string.special.symbol SpecialComment
-  call <sid>hi('@string.special.path',        s:gui0D, '', s:cterm0D, '', 'italic', '')
-  call <sid>hi('@string.special.url',         s:gui08, '', s:cterm08, '', 'italic', '')
+  call <sid>hi('@string.special.path',        s:gui0D, '', s:cterm0D, '', s:attrs.italic, '')
+  call <sid>hi('@string.special.url',         s:gui08, '', s:cterm08, '', s:attrs.italic, '')
 
   hi! link @character Character
   hi! link @character.special SpecialChar
@@ -394,22 +422,22 @@ if has('nvim-0.8.0')
   hi! link @number.float Float
 
   hi! link @type Type
-  call <sid>hi('@type.builtin',               s:gui0A, '', s:cterm0A, '', 'italic', '')
+  call <sid>hi('@type.builtin',               s:gui0A, '', s:cterm0A, '', s:attrs.italic, '')
   hi! link @type.definition Typedef
 
   hi! link @attribute Special
-  call <sid>hi('@attribute.builtin',          s:gui0C, '', s:cterm0C, '', 'italic', '')
+  call <sid>hi('@attribute.builtin',          s:gui0C, '', s:cterm0C, '', s:attrs.italic, '')
   hi! link @property @variable.member
 
   call <sid>hi('@function',                   s:gui16, '', s:cterm16, '', '', '')
-  call <sid>hi('@function.builtin',           s:gui16, '', s:cterm16, '', 'italic', '')
+  call <sid>hi('@function.builtin',           s:gui16, '', s:cterm16, '', s:attrs.italic, '')
   hi! link @function.call @function
   hi! link @function.macro Macro
 
   hi! link @function.method Function
   hi! link @function.method.call @function.method
 
-  call <sid>hi('@constructor',                s:gui0D, '', s:cterm0D, '', 'bold', '')
+  call <sid>hi('@constructor',                s:gui0D, '', s:cterm0D, '', s:attrs.bold, '')
 
   hi! link @operator Operator
 
@@ -417,7 +445,7 @@ if has('nvim-0.8.0')
   hi! link @keyword.coroutine Repeat
   hi! link @keyword.function Keyword
   hi! link @keyword.operator Operator
-  call <sid>hi('@keyword.import',             s:gui0E, '', s:cterm0E, '', 'italic', '')
+  call <sid>hi('@keyword.import',             s:gui0E, '', s:cterm0E, '', s:attrs.italic, '')
   hi! link @keyword.type Keyword
   hi! link @keyword.modifier Repeat
   hi! link @keyword.repeat Repeat
@@ -438,15 +466,23 @@ if has('nvim-0.8.0')
   hi! link @comment Comment
   hi! link @comment.documentation Comment
 
-  call <sid>hi('@comment.error',   s:gui08, '', s:cterm08, '', 'italic', '')
-  call <sid>hi('@comment.warning', s:gui09, '', s:cterm09, '', 'italic', '')
-  call <sid>hi('@comment.note',    s:gui0D, '', s:cterm0D, '', 'italic', '')
-  call <sid>hi('@comment.todo',    s:gui0C, '', s:cterm0C, '', 'italic', '')
+  call <sid>hi('@comment.error',   s:gui08, '', s:cterm08, '', s:attrs.italic, '')
+  call <sid>hi('@comment.warning', s:gui09, '', s:cterm09, '', s:attrs.italic, '')
+  call <sid>hi('@comment.note',    s:gui0D, '', s:cterm0D, '', s:attrs.italic, '')
+  call <sid>hi('@comment.todo',    s:gui0C, '', s:cterm0C, '', s:attrs.italic, '')
 
-  hi! @markup.strong        gui=bold          cterm=bold
-  hi! @markup.italic        gui=italic        cterm=italic
-  hi! @markup.strikethrough gui=strikethrough cterm=strikethrough
-  hi! @markup.underline     gui=underline     cterm=underline
+  if (g:tinted_bold == 1)
+    hi! @markup.strong        gui=bold          cterm=bold
+  endif
+  if (g:tinted_italic == 1)
+    hi! @markup.italic        gui=italic        cterm=italic
+  endif
+  if (g:tinted_strikethrough == 1)
+    hi! @markup.strikethrough gui=strikethrough cterm=strikethrough
+  endif
+  if (g:tinted_underline == 1)
+    hi! @markup.underline     gui=underline     cterm=underline
+  endif
 
   hi! link @markup.heading Title
   hi! link @markup.quote String
@@ -468,7 +504,7 @@ if has('nvim-0.8.0')
   hi! link @diff.delta Changed
 
   hi! link @tag                 Tag
-  call <sid>hi('@tag.builtin',  s:gui09, '', s:cterm09, '', 'italic', '')
+  call <sid>hi('@tag.builtin',  s:gui09, '', s:cterm09, '', s:attrs.italic, '')
   hi! link @tag.attribute       Special
   hi! link @tag.delimiter       Delimiter
 
@@ -502,7 +538,7 @@ if has('nvim-0.8.0')
   " @lsp.mod.abstract        Types and member functions that are abstract
   " @lsp.mod.async           Functions that are marked async
   " @lsp.mod.declaration     Declarations of symbols
-  call <sid>hi('@lsp.mod.defaultLibrary',    '', '', '', '', 'italic', '')
+  call <sid>hi('@lsp.mod.defaultLibrary',    '', '', '', '', s:attrs.italic, '')
   " @lsp.mod.definition      Definitions of symbols, for example, in header files
   hi! link @lsp.mod.deprecated DiagnosticDeprecated
   " @lsp.mod.modification    Variable references where the variable is assigned to
@@ -518,7 +554,7 @@ if has('nvim-0.8.0')
   hi! link @lsp.type.selfKeyword.rust               @variable.builtin
   hi! link @lsp.type.selfTypeKeyword.rust           @type.builtin
 
-  call <sid>hi('@lsp.mod.attribute',                '', '', '', '', 'italic', '')
+  call <sid>hi('@lsp.mod.attribute',                '', '', '', '', s:attrs.italic, '')
   hi! link @lsp.mod.controlFlow                     @keyword.repeat
   hi! link @lsp.mod.intraDocLink.rust               @markup.link
 
@@ -553,11 +589,11 @@ call <sid>hi('DiagnosticInfo',           s:gui0C, '', s:cterm0C, '', '', '')
 call <sid>hi('DiagnosticHint',           s:gui0D, '', s:cterm0D, '', '', '')
 call <sid>hi('DiagnosticOk',             s:gui0B, '', s:cterm0B, '', '', '')
 
-call <sid>hi('DiagnosticUnderlineError', '', '', s:ctermbg, s:cterm08, 'underline', s:gui08)
-call <sid>hi('DiagnosticUnderlineWarn',  '', '', s:ctermbg, s:cterm09, 'underline', s:gui09)
-call <sid>hi('DiagnosticUnderlineInfo',  '', '', s:ctermbg, s:cterm0C, 'underline', s:gui0C)
-call <sid>hi('DiagnosticUnderlineHint',  '', '', s:ctermbg, s:cterm0D, 'underline', s:gui0D)
-call <sid>hi('DiagnosticUnderlineOk',    '', '', s:ctermbg, s:cterm0B, 'underline', s:gui0B)
+call <sid>hi('DiagnosticUnderlineError', '', '', s:ctermbg, s:cterm08, s:attrs.underline, s:gui08)
+call <sid>hi('DiagnosticUnderlineWarn',  '', '', s:ctermbg, s:cterm09, s:attrs.underline, s:gui09)
+call <sid>hi('DiagnosticUnderlineInfo',  '', '', s:ctermbg, s:cterm0C, s:attrs.underline, s:gui0C)
+call <sid>hi('DiagnosticUnderlineHint',  '', '', s:ctermbg, s:cterm0D, s:attrs.underline, s:gui0D)
+call <sid>hi('DiagnosticUnderlineOk',    '', '', s:ctermbg, s:cterm0B, s:attrs.underline, s:gui0B)
 
 call <sid>hi('DiagnosticFloatingError',  s:gui08, s:gui01, s:cterm08, s:cterm01, '', '')
 call <sid>hi('DiagnosticFloatingWarn',   s:gui09, s:gui01, s:cterm09, s:cterm01, '', '')
@@ -565,7 +601,7 @@ call <sid>hi('DiagnosticFloatingInfo',   s:gui0C, s:gui01, s:cterm0C, s:cterm01,
 call <sid>hi('DiagnosticFloatingHint',   s:gui0D, s:gui01, s:cterm0D, s:cterm01, '', '')
 call <sid>hi('DiagnosticFloatingOk',     s:gui0B, s:gui01, s:cterm0B, s:cterm01, '', '')
 
-call <sid>hi('DiagnosticDeprecated',     '', '', s:cterm0F, s:cterm0F, 'strikethrough', '')
+call <sid>hi('DiagnosticDeprecated',     '', '', s:cterm0F, s:cterm0F, s:attrs.strikethrough, '')
 hi! link DiagnosticUnnecessary Comment
 
 
@@ -606,28 +642,28 @@ call <sid>hi('gitcommitHeader',        s:gui17, '', s:cterm17, '', '', '')
 call <sid>hi('gitcommitSelectedType',  s:gui16, '', s:cterm16, '', '', '')
 call <sid>hi('gitcommitUnmergedType',  s:gui16, '', s:cterm16, '', '', '')
 call <sid>hi('gitcommitDiscardedType', s:gui16, '', s:cterm16, '', '', '')
-call <sid>hi('gitcommitBranch',        s:gui13, '', s:cterm13, '', 'bold', '')
+call <sid>hi('gitcommitBranch',        s:gui13, '', s:cterm13, '', s:attrs.bold, '')
 call <sid>hi('gitcommitUntrackedFile', s:gui0A, '', s:cterm0A, '', '', '')
-call <sid>hi('gitcommitUnmergedFile',  s:gui08, '', s:cterm08, '', 'bold', '')
-call <sid>hi('gitcommitDiscardedFile', s:gui08, '', s:cterm08, '', 'bold', '')
-call <sid>hi('gitcommitSelectedFile',  s:gui0B, '', s:cterm0B, '', 'bold', '')
+call <sid>hi('gitcommitUnmergedFile',  s:gui08, '', s:cterm08, '', s:attrs.bold, '')
+call <sid>hi('gitcommitDiscardedFile', s:gui08, '', s:cterm08, '', s:attrs.bold, '')
+call <sid>hi('gitcommitSelectedFile',  s:gui0B, '', s:cterm0B, '', s:attrs.bold, '')
 
 " Gitsigns
 call <sid>hi('GitSignsAddInline',       s:gui01, s:gui14, s:cterm01, s:cterm14, '', '')
 call <sid>hi('GitSignsAddLnInline',     s:gui01, s:gui14, s:cterm01, s:cterm14, '', '')
-call <sid>hi('GitSignsAddPreview',      s:gui14, s:gui01, s:cterm14, s:cterm01, 'italic', '')
+call <sid>hi('GitSignsAddPreview',      s:gui14, s:gui01, s:cterm14, s:cterm01, s:attrs.italic, '')
 
 call <sid>hi('GitSignsDeleteInline',    s:gui01, s:gui12, s:cterm01, s:cterm12, '', '')
 call <sid>hi('GitSignsDeleteLnInline',  s:gui01, s:gui12, s:cterm01, s:cterm12, '', '')
-call <sid>hi('GitSignsDeleteVirtLn',    s:gui12, s:gui01, s:cterm12, s:cterm01, 'italic', '')
-call <sid>hi('GitSignsDeletePreview',   s:gui12, s:gui01, s:cterm12, s:cterm01, 'italic', '')
+call <sid>hi('GitSignsDeleteVirtLn',    s:gui12, s:gui01, s:cterm12, s:cterm01, s:attrs.italic, '')
+call <sid>hi('GitSignsDeletePreview',   s:gui12, s:gui01, s:cterm12, s:cterm01, s:attrs.italic, '')
 
 call <sid>hi('GitSignsChangeInline',    s:gui01, s:gui14, s:cterm01, s:cterm14, '', '')
 call <sid>hi('GitSignsChangeLnInline',  s:gui01, s:gui16, s:cterm01, s:cterm16, '', '')
 
 " HTML
-call <sid>hi('htmlBold',   s:gui05, '', s:cterm0A, '', 'bold', '')
-call <sid>hi('htmlItalic', s:gui05, '', s:cterm17, '', 'italic', '')
+call <sid>hi('htmlBold',   s:gui05, '', s:cterm0A, '', s:attrs.bold, '')
+call <sid>hi('htmlItalic', s:gui05, '', s:cterm17, '', s:attrs.italic, '')
 call <sid>hi('htmlEndTag', s:gui05, '', s:cterm05, '', '', '')
 call <sid>hi('htmlTag',    s:gui05, '', s:cterm05, '', '', '')
 
@@ -656,14 +692,14 @@ call <sid>hi('markdownHeadingDelimiter', s:gui0D, '', s:cterm0D, '', '', '')
 
 hi! link NeogitHunkHeader Special
 hi! link NeogitDiffHeader Directory
-call <sid>hi('NeogitDiffContext',           s:gui03, '', s:cterm03, '', 'italic', '')
+call <sid>hi('NeogitDiffContext',           s:gui03, '', s:cterm03, '', s:attrs.italic, '')
 hi! link NeogitDiffAdd Added
 hi! link NeogitDiffDelete Removed
 
 hi! link NeogitHunkHeaderHighlight Special
 hi! link NeogitDiffHeaderHighlight Directory
-call <sid>hi('NeogitDiffContextHighlight',  s:gui03, s:guibg, s:cterm03, s:ctermbg, 'italic', '')
-call <sid>hi('NeogitDiffContextCursor',     '', s:guibg, "", s:ctermbg, 'italic', '')
+call <sid>hi('NeogitDiffContextHighlight',  s:gui03, s:guibg, s:cterm03, s:ctermbg, s:attrs.italic, '')
+call <sid>hi('NeogitDiffContextCursor',     '', s:guibg, "", s:ctermbg, s:attrs.italic, '')
 hi! link NeogitDiffAddHighlight Added
 hi! link NeogitDiffDeleteHighlight Removed
 
@@ -781,7 +817,7 @@ hi! link CocSem_variable          Identifier
 call <sid>hi('CocHighlightRead',   s:gui0B, s:gui01,  s:cterm0B, s:cterm01, '', '')
 call <sid>hi('CocHighlightText',   s:gui0A, s:gui01,  s:cterm0A, s:cterm01, '', '')
 call <sid>hi('CocHighlightWrite',  s:gui08, s:gui01,  s:cterm08, s:cterm01, '', '')
-call <sid>hi('CocListMode',        s:gui01, s:gui0B,  s:cterm01, s:cterm0B, 'bold', '')
+call <sid>hi('CocListMode',        s:gui01, s:gui0B,  s:cterm01, s:cterm0B, s:attrs.bold, '')
 call <sid>hi('CocListPath',        s:gui01, s:gui0B,  s:cterm01, s:cterm0B, '', '')
 call <sid>hi('CocSessionsName',    s:gui05, '', s:cterm05, '', '', '')
 
@@ -847,7 +883,7 @@ call <sid>hi('jsExceptions',        s:gui0A, '', s:cterm0A, '', '', '')
 call <sid>hi('jsBuiltins',          s:gui0A, '', s:cterm0A, '', '', '')
 
 " Matchup
-call <sid>hi('MatchWord', s:gui0B, s:gui01,  s:cterm0B, s:cterm01, 'underline', '')
+call <sid>hi('MatchWord', s:gui0B, s:gui01,  s:cterm0B, s:cterm01, s:attrs.underline, '')
 
 " NERDTree
 call <sid>hi('NERDTreeDirSlash', s:gui0D, '', s:cterm0D, '', '', '')
